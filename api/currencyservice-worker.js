@@ -1,6 +1,5 @@
-var AWS = require("aws-sdk");
-const https = require('https');
-
+const AWS = require("aws-sdk");
+const httpsTools = require("./httpsTools")
 
 exports.handler = (event, context, callback) => {
   let countryCode = event['pathParameters']['code'];
@@ -22,7 +21,7 @@ exports.handler = (event, context, callback) => {
         res.on('error', reject);
         res.on('end', () => {
           if (res.statusCode >= 200 && res.statusCode <= 299) {
-            resolve({statusCode: res.statusCode, headers: res.headers, body: body});
+            resolve({statusCode: res.statusCode, headers: res.headers, body: JSON.parse(body)});
           } else {
             reject('Request failed. status: ' + res.statusCode + ', body: ' + body);
           }
@@ -33,15 +32,8 @@ exports.handler = (event, context, callback) => {
   });
   
   return httpsCall.then(result => {
-    console.log(JSON.parse(result.body));
-    console.log(JSON.parse(result.body).to[0]);
-    var selectedItem = JSON.parse(result.body).to
+    var selectedItem = result.body.to
                            .filter(item => item.quotecurrency == countryCode);
-    return { statusCode: 200, 
-             headers: {
-                "Access-Control-Allow-Origin":"*"
-             },
-             body: JSON.stringify({rate:selectedItem[0].mid})
-            };
-    })
+    return httpsTools.Response200({rate:selectedItem[0].mid});
+  });
 }
