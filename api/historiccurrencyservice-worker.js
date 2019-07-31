@@ -26,8 +26,7 @@ exports.handler = async (event) => {
       .then(result => {
         console.log(result);          
         return httpsTools.response200({
-          "dateretrieved": result.Item.RetrievedStamp,
-          "value":result.Item.Value
+          "value":result[0].Value
         });
       });
   }
