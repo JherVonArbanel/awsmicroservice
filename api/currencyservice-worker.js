@@ -1,57 +1,13 @@
 var AWS = require("aws-sdk");
 const https = require('https');
 
-var docClient = new AWS.DynamoDB.DocumentClient();
-var table = "Test";
-var params = {
-  TableName: table,
-  KeyConditionExpression: 'Code = :partionKey and #ts <= :sortKey',
-  ExpressionAttributeNames:{
-    "#ts": "Timestamp"
-  },
-  ExpressionAttributeValues: {
-    ':partionKey': 'ARS_201901',
-    ':sortKey': 108
-  },
-  Limit: '1',
-  ScanIndexForward: false
-};
-
-var paramsPut = {
-  TableName : table,
-  Item: {
-     Code: 'ARS_201901',
-     Timestamp: 108,
-     Value: 19
-  }
-};
-
-var paramsGet = {
-  TableName: table,
-  KeyConditionExpression: 'Code = :partionKey and #ts > :sortKey',
-  ExpressionAttributeNames:{
-    "#ts": "Timestamp"
-  },
-  ExpressionAttributeValues: {
-    ':partionKey': 'ARS_201901',
-    ':sortKey': 0
-  },
-  ScanIndexForward: false
-};
-
-let options = {
-    host : 'ecdapi.xe.com',
-    path:  '/v1/convert_from.json/?from=USD&to=CAD,EUR,ARS&amount=1',
-    headers: {
-        'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
-    },
-};
 
 exports.handler = (event, context, callback) => {
+  let countryCode = event['pathParameters']['code'];
   var options = {
   host: 'xecdapi.xe.com',
   port: 443,
-  path: '/v1/convert_from.json/?from=USD&to=CAD,EUR,ARS&amount=1',
+  path: '/v1/convert_from.json/?from=USD&to=' + countryCode + '&amount=1',
   method: 'GET',
   headers: {
         'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
@@ -80,7 +36,7 @@ exports.handler = (event, context, callback) => {
     console.log(JSON.parse(result.body));
     console.log(JSON.parse(result.body).to[0]);
     var selectedItem = JSON.parse(result.body).to
-                           .filter(item => item.quotecurrency == "ARS");
+                           .filter(item => item.quotecurrency == countryCode);
     return { statusCode: 200, 
              headers: {
                 "Access-Control-Allow-Origin":"*"
