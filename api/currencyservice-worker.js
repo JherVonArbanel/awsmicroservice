@@ -16,11 +16,28 @@ exports.handler = (event, context, callback) => {
     };
     
     return httpsTools.sendHttps(options)
-                    .then(result => {
-                        let selectedItem = result.body.to
-                                                 .filter(item => item.quotecurrency == countryCode);
-                        return httpsTools.response200({rate:selectedItem[0].mid});
-                      });
+      .then(() => {
+        let currentDate = new Date();
+        let selectedItem = result.body.to
+          .filter(item => item.quotecurrency == countryCode);
+        let currentCode =  countryCode + "_" + currentDate.getUTCFullYear() + (currentDate.getMonth()+1);
+        let saveOptions = {
+          TableName : "Currencies",
+          Item: {
+              Code: currentCode,
+              Timestamp: currentDate.getTime(),
+              Value: selectedItem[0].mid
+          }
+        };
+        return docClient.put(paramsPut)
+          .promise()
+          .then(result => {
+            return saveOptions;
+          });
+      })
+      .then(result => {
+          return httpsTools.response200(result);
+      });
   }
   catch(ex){
     return httpsTools.response500(ex);
