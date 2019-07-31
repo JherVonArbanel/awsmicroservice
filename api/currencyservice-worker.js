@@ -35,7 +35,10 @@ exports.handler = (event, context, callback) => {
         return dbClient.put(saveOptions)
           .promise()
           .then(() => {
-            return httpsTools.response200(saveOptions.Item);
+            return httpsTools.response200({
+              "dateretrieved": saveOptions.Item.RetrievedStamp,
+              "value":saveOptions.Item.Value
+            });
           });
       });
   }
