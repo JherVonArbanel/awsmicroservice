@@ -29,7 +29,7 @@ exports.handler = (event, context, callback) => {
               Value: selectedItem[0].mid
           }
         };
-        return docClient.put(paramsPut)
+        return docClient.put(saveOptions)
           .promise()
           .then(() => {
             return saveOptions;
