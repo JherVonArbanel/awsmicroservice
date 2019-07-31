@@ -26,7 +26,7 @@ exports.handler = (event, context, callback) => {
           TableName : "Currencies",
           Item: {
               Code: currentCode,
-              Timestamp: currentDate.getTime(),
+              RetrievedStamp : currentDate.getTime(),
               Value: selectedItem[0].mid
           }
         };
