@@ -4,7 +4,7 @@ const dbClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
   try{
-    let countryCode = 'ARS';// event['pathParameters']['code'];
+    let countryCode = event['pathParameters']['code'];
 
     let options = {
     host: 'xecdapi.xe.com',
@@ -40,6 +40,7 @@ exports.handler = (event, context, callback) => {
       });
   }
   catch(ex){
-    return httpsTools.response500(ex);
+    console.log(ex);
+    return httpsTools.response500("Please contact administrator.");
   }
 }
