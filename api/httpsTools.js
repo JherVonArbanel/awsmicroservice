@@ -9,7 +9,7 @@ module.exports = {
             },
             "body": {
                 success: true,
-                result: result
+                result: JSON.stringify(result)
             }
         };
     },
