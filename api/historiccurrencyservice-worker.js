@@ -20,16 +20,15 @@ exports.handler = async (event) => {
       Limit: '1',
       ScanIndexForward: false
     };
-
+    console.log(params);
     return dbClient.query(params)
       .promise()
       .then(result => {
-        console.log(result);
-          console.log(result);
-          return httpsTools.response200({
-            "dateretrieved": saveOptions.Item.RetrievedStamp,
-            "value":saveOptions.Item.Value
-          });
+        console.log(result);          
+        return httpsTools.response200({
+          "dateretrieved": saveOptions.Item.RetrievedStamp,
+          "value":saveOptions.Item.Value
+        });
       });
   }
   catch(ex){
