@@ -15,7 +15,7 @@ exports.handler = async (event) => {
       KeyConditionExpression: 'Code = :partionKey and RetrievedStamp <= :sortKey',
       ExpressionAttributeValues: {
         ':partionKey': currentCode,
-        ':sortKey': timestamp
+        ':sortKey': parseInt(timestamp)
       },
       Limit: '1',
       ScanIndexForward: false
