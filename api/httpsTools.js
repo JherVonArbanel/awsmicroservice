@@ -1,16 +1,31 @@
 const https = require('https');
 
 module.exports = {
-    Response200 = (body) => {
+    response200: (result) => {
         return { 
             "statusCode": 200, 
             "headers": {
                 "Access-Control-Allow-Origin":"*"
             },
-            "body": JSON.stringify(body)
+            "body": {
+                success: true,
+                result: result
+            }
         };
     },
-    SendHttps = (options) => {
+    response500: (error) => {
+        return { 
+            "statusCode": 500, 
+            "headers": {
+                "Access-Control-Allow-Origin":"*"
+            },
+            "body": {
+                success: false,
+                error: error
+            }
+        };
+    },
+    sendHttps: (options) => {
         return new Promise((resolve, reject) => {
             const req = https.request(options,
               (res) => {
