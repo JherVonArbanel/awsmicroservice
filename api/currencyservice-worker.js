@@ -32,12 +32,8 @@ exports.handler = (event, context, callback) => {
         return docClient.put(saveOptions)
           .promise()
           .then(() => {
-            return saveOptions;
+            return httpsTools.response200(saveOptions);
           });
-      })
-      .then(result => {
-          console.log(result);
-          return httpsTools.response200(result);
       });
   }
   catch(ex){
