@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       .then(result => {
         console.log(result);          
         return httpsTools.response200({
-          "value":result[0].Value
+          "value":result.Items[0].Value
         });
       });
   }
