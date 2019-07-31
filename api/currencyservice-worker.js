@@ -36,6 +36,7 @@ exports.handler = (event, context, callback) => {
           });
       })
       .then(result => {
+          console.log(result);
           return httpsTools.response200(result);
       });
   }
