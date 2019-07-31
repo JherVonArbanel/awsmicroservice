@@ -21,6 +21,7 @@ Resources:
   CurrencyServiceWorker:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: CurrencyServiceWorker
       Handler: index.handler
       Runtime: nodejs10.x
       CodeUri: ./api
@@ -28,7 +29,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: Currencies
-        Policies: AmazonDynamoDBFullAccess
+      Policies: AmazonDynamoDBFullAccess
     
 
 

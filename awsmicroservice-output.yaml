@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  Currencies:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Currencies
+      AttributeDefinitions:
+      - AttributeName: Code
+        AttributeType: S
+      - AttributeName: RetrievedStamp
+        AttributeType: N
+      KeySchema:
+      - AttributeName: Code
+        KeyType: HASH
+      - AttributeName: RetrievedStamp
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  CurrencyServiceWorker:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: currencyservice-worker.handler
+      Runtime: nodejs10.x
+      CodeUri: s3://jherzon-artifacts-for-lambda/9bd131cfb082a8c8bb865f0059c8b0e2
+      Environment:
+        Variables:
+          TABLE_NAME: Currencies
+      Policies: AmazonDynamoDBFullAccess
