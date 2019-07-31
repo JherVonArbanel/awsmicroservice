@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 const httpsTools = require("./httpsTools")
 const dbClient = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = (event, context, callback) => {
+exports.handler = async (event) => {
   try{
     let countryCode = event['pathParameters']['code'];
 
