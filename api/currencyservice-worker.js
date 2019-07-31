@@ -16,7 +16,7 @@ exports.handler = (event, context, callback) => {
     };
 
     return httpsTools.sendHttps(options)
-      .then(() => {
+      .then((result) => {
         let currentDate = new Date();
         let selectedItem = result.body.to
           .filter(item => item.quotecurrency == countryCode);
