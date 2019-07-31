@@ -15,10 +15,10 @@ exports.handler = (event, context, callback) => {
       }
     };
     
-    return httpsTools.SendHttps(options)
+    return httpsTools.sendHttps(options)
                     .then(result => {
                         let selectedItem = result.body.to
-                                                .filter(item => item.quotecurrency == countryCode);
+                                                 .filter(item => item.quotecurrency == countryCode);
                         return httpsTools.Response200({rate:selectedItem[0]});
                       });
   }
