@@ -12,10 +12,7 @@ exports.handler = async (event) => {
                         ("0"+(datetime.getUTCMonth()+1)).slice(-2);
     var params = {
       TableName: "Currencies",
-      KeyConditionExpression: 'Code = :partionKey and #ts <= :sortKey',
-      ExpressionAttributeNames:{
-        "#ts": "RetrievedStamp"
-      },
+      KeyConditionExpression: 'Code = :partionKey and RetrievedStamp <= :sortKey',
       ExpressionAttributeValues: {
         ':partionKey': currentCode,
         ':sortKey': timestamp
