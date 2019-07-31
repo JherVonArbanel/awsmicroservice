@@ -6,7 +6,7 @@ exports.handler = async (event) => {
   try{
     let countryCode = event["pathParameters"]["code"];
     let timestamp = event["pathParameters"]["dateretrieved"];
-    var datetime = new Date(timestamp);
+    var datetime = new Date(parseInt(timestamp));
     let currentCode =  countryCode + "_" + 
                         datetime.getUTCFullYear() +
                         ("0"+(datetime.getUTCMonth()+1)).slice(-2);
