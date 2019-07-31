@@ -45,7 +45,7 @@ Resources:
         GetCurrency:
           Type: Api
           Properties:
-            Path: /currency/Historic/{dateretrieved} 
+            Path: /currency/{code}/Historic/{dateretrieved} 
             Method: get      
     
 
