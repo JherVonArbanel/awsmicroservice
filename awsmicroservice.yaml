@@ -22,14 +22,31 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: CurrencyServiceWorker
-      Handler: index.handler
       Runtime: nodejs10.x
       CodeUri: ./api
       Handler: currencyservice-worker.handler
-      Environment:
-        Variables:
-          TABLE_NAME: Currencies
       Policies: AmazonDynamoDBFullAccess
+      Events:
+        GetCurrency:
+          Type: Api
+          Properties:
+            Path: /currency/{code} 
+            Method: get
+  HistoricCurrencyServiceWorker:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: HistoricCurrencyServiceWorker
+      Handler: index.handler
+      Runtime: nodejs10.x
+      CodeUri: ./api
+      Handler: historiccurrencyservice-worker.handler
+      Policies: AmazonDynamoDBFullAccess
+      Events:
+        GetCurrency:
+          Type: Api
+          Properties:
+            Path: /currency/Historic/{dateretrieved} 
+            Method: get      
     
 
 

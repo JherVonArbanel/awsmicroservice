@@ -21,10 +21,17 @@ Resources:
   CurrencyServiceWorker:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: CurrencyServiceWorker
       Handler: currencyservice-worker.handler
       Runtime: nodejs10.x
-      CodeUri: s3://jherzon-artifacts-for-lambda/9bd131cfb082a8c8bb865f0059c8b0e2
+      CodeUri: s3://jherzon-artifacts-for-lambda/1d26c976d6fdd931c27e28d2460e5183
       Environment:
         Variables:
           TABLE_NAME: Currencies
       Policies: AmazonDynamoDBFullAccess
+      Events:
+        GetCurrency:
+          Type: Api
+          Properties:
+            Path: /currency
+            Method: get
