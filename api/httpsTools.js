@@ -7,9 +7,7 @@ module.exports = {
             "headers": {
                 "Access-Control-Allow-Origin":"*"
             },
-            "body": JSON.stringify({
-                result: result
-            })
+            "body": JSON.stringify(result)
         };
     },
     response500: (error) => {
@@ -18,9 +16,7 @@ module.exports = {
             "headers": {
                 "Access-Control-Allow-Origin":"*"
             },
-            "body": JSON.stringify({
-                result: error
-            })
+            "body": JSON.stringify(error)
         };
     },
     sendHttps: (options) => {

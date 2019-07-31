@@ -3,7 +3,7 @@ const httpsTools = require("./httpsTools")
 
 exports.handler = (event, context, callback) => {
   try{
-    let countryCode = event['pathParameters']['code'];
+    let countryCode = 'ARS';// event['pathParameters']['code'];
 
     let options = {
     host: 'xecdapi.xe.com',
