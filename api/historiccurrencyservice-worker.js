@@ -24,7 +24,7 @@ exports.handler = async (event) => {
       ScanIndexForward: false
     };
 
-    return dbClient.query(paramsGet)
+    return dbClient.query(params)
       .promise()
       .then(result => {
         console.log(result);
