@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const httpsTools = require("./httpsTools")
+const dbClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
   try{
@@ -29,7 +30,7 @@ exports.handler = (event, context, callback) => {
               Value: selectedItem[0].mid
           }
         };
-        return docClient.put(saveOptions)
+        return dbClient.put(saveOptions)
           .promise()
           .then(() => {
             return httpsTools.response200(saveOptions);
