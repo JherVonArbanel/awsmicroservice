@@ -19,7 +19,7 @@ exports.handler = (event, context, callback) => {
                     .then(result => {
                         let selectedItem = result.body.to
                                                  .filter(item => item.quotecurrency == countryCode);
-                        return httpsTools.Response200({rate:selectedItem[0]});
+                        return httpsTools.response200({rate:selectedItem[0]});
                       });
   }
   catch(ex){
