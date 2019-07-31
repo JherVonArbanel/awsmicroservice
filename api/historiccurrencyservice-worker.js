@@ -1,91 +1,43 @@
-var AWS = require("aws-sdk");
-const https = require('https');
-
-var docClient = new AWS.DynamoDB.DocumentClient();
-var table = "Test";
-var params = {
-  TableName: table,
-  KeyConditionExpression: 'Code = :partionKey and #ts <= :sortKey',
-  ExpressionAttributeNames:{
-    "#ts": "Timestamp"
-  },
-  ExpressionAttributeValues: {
-    ':partionKey': 'ARS_201901',
-    ':sortKey': 108
-  },
-  Limit: '1',
-  ScanIndexForward: false
-};
-
-var paramsPut = {
-  TableName : table,
-  Item: {
-     Code: 'ARS_201901',
-     Timestamp: 108,
-     Value: 19
-  }
-};
-
-var paramsGet = {
-  TableName: table,
-  KeyConditionExpression: 'Code = :partionKey and #ts > :sortKey',
-  ExpressionAttributeNames:{
-    "#ts": "Timestamp"
-  },
-  ExpressionAttributeValues: {
-    ':partionKey': 'ARS_201901',
-    ':sortKey': 0
-  },
-  ScanIndexForward: false
-};
-
-let options = {
-    host : 'ecdapi.xe.com',
-    path:  '/v1/convert_from.json/?from=USD&to=CAD,EUR,ARS&amount=1',
-    headers: {
-        'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
-    },
-};
+const AWS = require("aws-sdk");
+const httpsTools = require("./httpsTools")
+const dbClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
-  var options = {
-  host: 'xecdapi.xe.com',
-  port: 443,
-  path: '/v1/convert_from.json/?from=USD&to=CAD,EUR,ARS&amount=1',
-  method: 'GET',
-  headers: {
-        'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
-    }
-  };
-  
-  var httpsCall = new Promise((resolve, reject) => {
-    const req = https.request(options,
-      (res) => {
-        let body = '';
-        res.on('data', (chunk) => (body += chunk.toString()));
-        res.on('error', reject);
-        res.on('end', () => {
-          if (res.statusCode >= 200 && res.statusCode <= 299) {
-            resolve({statusCode: res.statusCode, headers: res.headers, body: body});
-          } else {
-            reject('Request failed. status: ' + res.statusCode + ', body: ' + body);
-          }
-        });
+  try{
+    let countryCode = event["pathParameters"]["code"];
+    let timestamp = event["pathParameters"]["dateretrieved"];
+    var datetime = new Date(timestamp);
+    let currentCode =  countryCode + "_" + 
+                        datetime.getUTCFullYear() +
+                        ("0"+(datetime.getUTCMonth()+1)).slice(-2);
+    var params = {
+      TableName: "Currencies",
+      KeyConditionExpression: 'Code = :partionKey and #ts <= :sortKey',
+      ExpressionAttributeNames:{
+        "#ts": "RetrievedStamp"
+      },
+      ExpressionAttributeValues: {
+        ':partionKey': currentCode,
+        ':sortKey': timestamp
+      },
+      Limit: '1',
+      ScanIndexForward: false
+    };
+
+    paramsGet.ExpressionAttributeValues
+    return dbClient.query(paramsGet)
+      .promise()
+      .then(result => {
+        console.log(result);
+          console.log(result);
+          return httpsTools.response200({
+            "dateretrieved": saveOptions.Item.RetrievedStamp,
+            "value":saveOptions.Item.Value
+          });
       });
-    req.on('error', reject);
-    req.end();
-  });
-  
-  return httpsCall.then(result => {
-    console.log(JSON.parse(result.body));
-    console.log(JSON.parse(result.body).to[0]);
-    var selectedItem = JSON.parse(result.body).to
-                           .filter(item => item.quotecurrency == "ARS");
-    return { statusCode: 200, 
-             headers: {
-                "Access-Control-Allow-Origin":"*"
-             },
-             body: JSON.stringify({rate:selectedItem[0].mid})
-            };
-    })
+  }
+  catch(ex){
+    console.log(ex);
+    return httpsTools.response500("Please contact administrator.");
+  }
 }
