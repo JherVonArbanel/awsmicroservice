@@ -26,8 +26,8 @@ exports.handler = async (event) => {
       .then(result => {
         console.log(result);          
         return httpsTools.response200({
-          "dateretrieved": saveOptions.Item.RetrievedStamp,
-          "value":saveOptions.Item.Value
+          "dateretrieved": result.Item.RetrievedStamp,
+          "value":result.Item.Value
         });
       });
   }
