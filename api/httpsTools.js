@@ -8,7 +8,6 @@ module.exports = {
                 "Access-Control-Allow-Origin":"*"
             },
             "body": JSON.stringify({
-                success: true,
                 result: result
             })
         };
@@ -20,7 +19,6 @@ module.exports = {
                 "Access-Control-Allow-Origin":"*"
             },
             "body": JSON.stringify({
-                success: true,
                 result: error
             })
         };
