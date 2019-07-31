@@ -24,7 +24,7 @@ exports.handler = async (event) => {
           .filter(item => item.quotecurrency == countryCode);
         let currentCode =  countryCode + "_" + 
                            currentDate.getUTCFullYear() +
-                           ("0"+(currentDate.getMonth()+1)).slice(-2);
+                           ("00"+(currentDate.getMonth()+1)).slice(-2);
         let saveOptions = {
           TableName : "Currencies",
           Item: {
