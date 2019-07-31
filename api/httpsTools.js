@@ -5,11 +5,12 @@ module.exports = {
         return { 
             "statusCode": 200, 
             "headers": {
-                "Access-Control-Allow-Origin":"*"
+                "Access-Control-Allow-Origin":"*",
+                "content-type":"application/json"
             },
             "body": {
                 success: true,
-                result: JSON.stringify(result)
+                result: result
             }
         };
     },
