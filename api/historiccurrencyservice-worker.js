@@ -24,7 +24,6 @@ exports.handler = async (event) => {
       ScanIndexForward: false
     };
 
-    paramsGet.ExpressionAttributeValues
     return dbClient.query(paramsGet)
       .promise()
       .then(result => {
