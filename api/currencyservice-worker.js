@@ -21,7 +21,9 @@ exports.handler = (event, context, callback) => {
         let currentDate = new Date();
         let selectedItem = result.body.to
           .filter(item => item.quotecurrency == countryCode);
-        let currentCode =  countryCode + "_" + currentDate.getUTCFullYear() + (currentDate.getMonth()+1);
+        let currentCode =  countryCode + "_" + 
+                           currentDate.getUTCFullYear() +
+                           ("0"+(currentDate.getMonth()+1)).slice(-2);
         let saveOptions = {
           TableName : "Currencies",
           Item: {
@@ -33,7 +35,7 @@ exports.handler = (event, context, callback) => {
         return dbClient.put(saveOptions)
           .promise()
           .then(() => {
-            return httpsTools.response200(saveOptions);
+            return httpsTools.response200(saveOptions.Item);
           });
       });
   }
