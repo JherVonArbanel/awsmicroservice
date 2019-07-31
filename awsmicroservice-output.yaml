@@ -23,7 +23,7 @@ Resources:
     Properties:
       FunctionName: CurrencyServiceWorker
       Runtime: nodejs10.x
-      CodeUri: s3://jherzon-artifacts-for-lambda/537bed37f1275a5164550da299af4248
+      CodeUri: s3://jherzon-artifacts-for-lambda/03e417787b697c8e83f99a6ac5efe5cd
       Handler: currencyservice-worker.handler
       Policies: AmazonDynamoDBFullAccess
       Events:
@@ -38,7 +38,7 @@ Resources:
       FunctionName: HistoricCurrencyServiceWorker
       Handler: historiccurrencyservice-worker.handler
       Runtime: nodejs10.x
-      CodeUri: s3://jherzon-artifacts-for-lambda/537bed37f1275a5164550da299af4248
+      CodeUri: s3://jherzon-artifacts-for-lambda/03e417787b697c8e83f99a6ac5efe5cd
       Policies: AmazonDynamoDBFullAccess
       Events:
         GetCurrency:

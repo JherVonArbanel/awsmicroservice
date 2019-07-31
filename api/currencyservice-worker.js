@@ -14,7 +14,7 @@ exports.handler = (event, context, callback) => {
           'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
       }
     };
-    
+
     return httpsTools.sendHttps(options)
       .then(() => {
         let currentDate = new Date();
@@ -31,7 +31,7 @@ exports.handler = (event, context, callback) => {
         };
         return docClient.put(paramsPut)
           .promise()
-          .then(result => {
+          .then(() => {
             return saveOptions;
           });
       })
