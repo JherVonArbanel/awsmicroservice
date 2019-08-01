@@ -32,10 +32,10 @@ Resources:
           Properties:
             Path: /currency/{code} 
             Method: get
-  CurrencyServiceWorker:
+  CurrencyServiceWorkerCompund:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: CurrencyServiceWorker
+      FunctionName: CurrencyServiceWorkerCompund
       Runtime: nodejs10.x
       CodeUri: ./api
       Handler: currencyservicecompound-worker.handler
