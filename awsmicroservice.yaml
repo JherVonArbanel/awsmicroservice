@@ -32,6 +32,20 @@ Resources:
           Properties:
             Path: /currency/{code} 
             Method: get
+  CurrencyServiceWorker:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CurrencyServiceWorker
+      Runtime: nodejs10.x
+      CodeUri: ./api
+      Handler: currencyservicecompound-worker.handler
+      Policies: AmazonDynamoDBFullAccess
+      Events:
+        GetCurrency:
+          Type: Api
+          Properties:
+            Path: /currency/{code}/{destinationCode} 
+            Method: get
   HistoricCurrencyServiceWorker:
     Type: AWS::Serverless::Function
     Properties:
