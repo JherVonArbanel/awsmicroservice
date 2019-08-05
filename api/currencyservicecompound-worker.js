@@ -4,8 +4,8 @@ const dbClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
   try{
-    let countryCode = 'GBP';//event['pathParameters']['code'];
-    let countryDestinationCode = 'ARS';//event['pathParameters']['destinationCode'];
+    let countryCode = event['pathParameters']['code'];
+    let countryDestinationCode = event['pathParameters']['destinationCode'];
     let options = {
     host: 'xecdapi.xe.com',
     port: 443,
