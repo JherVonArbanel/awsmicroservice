@@ -21,10 +21,11 @@ exports.handler = async (event) => {
         console.log(result);
         let currentDate = new Date();
         let selectedItem = result.body.to
-          .filter(item => item.quotecurrency == countryCode);
+          .filter(item => item.quotecurrency == countryDestinationCode);
         let currentCode =  countryCode + "_" + 
                            currentDate.getUTCFullYear() +
                            ("0"+(currentDate.getMonth()+1)).slice(-2);
+        console.log(selectedItem);
         let saveOptions = {
           TableName : "Currencies",
           Item: {
