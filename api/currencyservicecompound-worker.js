@@ -15,7 +15,7 @@ exports.handler = async (event) => {
           'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
       }
     };
-
+    console.log(options);
     return httpsTools.sendHttps(options)
       .then((result) => {
         console.log(result);
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
           .filter(item => item.quotecurrency == countryCode);
         let currentCode =  countryCode + "_" + 
                            currentDate.getUTCFullYear() +
-                           ("00"+(currentDate.getMonth()+1)).slice(-2);
+                           ("0"+(currentDate.getMonth()+1)).slice(-2);
         let saveOptions = {
           TableName : "Currencies",
           Item: {
