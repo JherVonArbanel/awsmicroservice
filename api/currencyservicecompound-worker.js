@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     path: '/v1/convert_from.json/?from='+ countryCode + '&to=' + countryDestinationCode + '&amount=1',
     method: 'GET',
     headers: {
-          'Authorization': 'Basic dGVzdDY0MzE2MTEzOTpqNTQ0ZW90Y2ljam5tMWh0aDY5N2xycThsaA=='
+          'Authorization': 'Basic dGVzdGFwcGpoZXJ6NTUzNjkxMDc4OjZuaW85OHByZjlxdmE4ZGQyOXBxNzZzN3Vu'
       }
     };
     console.log(options);
